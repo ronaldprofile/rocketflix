@@ -1,0 +1,57 @@
+@import "./reset";
+
+.container {
+  margin: 7.875rem auto;
+
+  .wrapper {
+    > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.625rem;
+
+      img {
+        width: 87px;
+      }
+
+      .title {
+        font-size: 2.525rem;
+        font-weight: bold;
+        color: $title;
+      }
+    }
+
+    .text {
+      margin-top: 1.875rem;
+
+      button {
+        padding: 0.875rem 0.825rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        font-weight: bold;
+        background: $bg-button;
+        color: #000000;
+
+        border-radius: 5px;
+        border: 1px solid #1a1a1a;
+        transition: 0.2s;
+        &:hover {
+          filter: brightness(0.9);
+        }
+
+        img {
+          width: 36px;
+        }
+      }
+
+      p {
+        margin-top: 1.625rem;
+        font-size: 0.875rem;
+        font-weight: 400;
+        color: $title;
+      }
+    }
+  }
+}
