@@ -3,18 +3,27 @@ import { API_KEY, BASE_URL, IMG_URL, language } from "./api/index.js";
 const contentElement = document.querySelector(".content");
 const buttonFindMovie = document.querySelector(".text button");
 
+function generateId(numberMax) {
+  return Math.floor(Math.random() * numberMax + 1);
+}
+
 async function getMovieRandom() {
   try {
-    const response = await fetch(`${BASE_URL}634649?${API_KEY}&${language}`);
+    const id = generateId(100000);
+    const response = await fetch(`${BASE_URL}${id}?${API_KEY}&${language}`);
     const movie = await response.json();
 
     const poster_path = movie.poster_path;
     const movieImage = `${IMG_URL}${poster_path}`;
 
-    renderMovie(movie, movieImage);
+    if (response.ok) {
+      renderMovie(movie, movieImage);
+    } else {
+      throw new Error("Something went wrong");
+    }
   } catch (error) {
-    console.log(error);
     showMessageMovieNotFund();
+    console.log(error);
   }
 }
 
