@@ -8,16 +8,14 @@ function generateId(numberMax) {
 }
 
 async function getMovieRandom() {
+  const id = generateId(100000);
+
   try {
-    const id = generateId(100000);
     const response = await fetch(`${BASE_URL}${id}?${API_KEY}&${language}`);
     const movie = await response.json();
 
-    const poster_path = movie.poster_path;
-    const movieImage = `${IMG_URL}${poster_path}`;
-
     if (response.ok) {
-      renderMovie(movie, movieImage);
+      renderMovie(movie);
     } else {
       throw new Error("Something went wrong");
     }
@@ -27,18 +25,28 @@ async function getMovieRandom() {
   }
 }
 
-function renderMovie(movie, movieImage) {
+function renderMovie(movie) {
+  const { original_title, overview, backdrop_path, poster_path } = movie;
+
+  if (!backdrop_path && !poster_path) {
+    throw new Error("Can't show this movie, because the image is missing");
+  }
+
+  const movieImage = `${IMG_URL}${poster_path || backdrop_path}`;
+
   const html = `
     <div class="movie">
       <div class="movie-image">
         <img src=${movieImage}
-          alt=${movie.original_title}
-          title=${movie.original_title}
+          alt=${original_title}
+          title=${original_title}
         />
       </div>
       <div class="info">
-        <strong class="movie-title">${movie.original_title}</strong>
-        <p class="movie-description">${movie.overview}</p>
+        <strong class="movie-title">${original_title}</strong>
+        <p class="movie-description">
+          ${overview || "Filme sem descrição."}
+        </p>
       </div>
     </div>
   `;
