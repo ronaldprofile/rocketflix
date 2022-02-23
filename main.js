@@ -25,12 +25,18 @@ async function getMovieRandom() {
   }
 }
 
-function renderMovie(movie) {
-  const { original_title, overview, backdrop_path, poster_path } = movie;
+function checkMovieHasAnImage(movie) {
+  const { backdrop_path, poster_path } = movie;
 
   if (!backdrop_path && !poster_path) {
     throw new Error("Can't show this movie, because the image is missing");
   }
+}
+
+function renderMovie(movie) {
+  const { original_title, overview, backdrop_path, poster_path } = movie;
+
+  checkMovieHasAnImage(movie);
 
   const movieImage = `${IMG_URL}${poster_path || backdrop_path}`;
 
